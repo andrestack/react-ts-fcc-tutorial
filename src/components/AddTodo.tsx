@@ -7,6 +7,7 @@ export const AddTodo = () => {
   const [input, setInput] = useState<string>('')
   const [todos, setTodos] = useState<string[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
+  const { addTodo } = useTodo()
 
   useEffect(() => {
     if (inputRef.current) {
@@ -17,10 +18,13 @@ export const AddTodo = () => {
   const handleSubmission = (e: React.FormEvent) => {
     e.preventDefault()
     if (input.trim() !== '') {
+      addTodo(input)
       setTodos([...todos, input])
       setInput('')
+      toast.success('Todo added successfully!')
+    } else {
+      toast.error('Todo field cannot be empty!')
     }
-    console.log(input)
   }
 
   return (
